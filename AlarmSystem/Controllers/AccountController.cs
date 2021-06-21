@@ -28,7 +28,6 @@ namespace AlarmSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> UserLogin(LoginFormModel form)
         {
-            var temp = Helper.Crypto.Encrypt(form.Password);
             UserCore userCore = new UserCore(_context);
             string _role = await userCore.Login(form.Email, form.Password);
             switch(_role)
