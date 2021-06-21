@@ -13,7 +13,7 @@ namespace AlarmSystem.Core
 
         }
 
-        public DbSet<Models.Action> Actions { get; set; }
+        public DbSet<AlarmAction> AlarmAction { get; set; }
         public DbSet<AlarmObject> AlarmObjects { get; set; }
         public DbSet<AlarmScenerio> AlarmScenerios { get; set; }
         public DbSet<Models.AlarmSystem> AlarmSystems { get; set; }

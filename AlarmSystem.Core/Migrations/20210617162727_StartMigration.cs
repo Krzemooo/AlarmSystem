@@ -7,7 +7,7 @@ namespace AlarmSystem.Core.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Actions",
+                name: "AlarmActions",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -17,7 +17,7 @@ namespace AlarmSystem.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Actions", x => x.ID);
+                    table.PrimaryKey("PK_AlarmActions", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -201,7 +201,7 @@ namespace AlarmSystem.Core.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Actions");
+                name: "AlarmActions");
 
             migrationBuilder.DropTable(
                 name: "AlarmScenerios");

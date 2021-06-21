@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AlarmSystem.Core.Models
 {
-    public class Action
+    public class AlarmAction
     {
         [Key]
         public int ID { get; set; }
