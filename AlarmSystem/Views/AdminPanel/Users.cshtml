@@ -1,0 +1,56 @@
+﻿@using AlarmSystem.Core.Models
+@model List<User>
+
+@{
+    Layout = "_Layout";
+}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="col-9">
+                            <h3 class="card-title ">Użytkownicy w systemie</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="users" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Count > 0)
+                                {
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.Email
+                                            </td>
+                                            <td>
+                                                @item.Role
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    $(document).ready(function () {
+        $('#users').DataTable();
+    });
+</script>

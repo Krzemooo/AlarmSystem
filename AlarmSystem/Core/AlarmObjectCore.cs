@@ -18,7 +18,9 @@ namespace AlarmSystem.Core
 
         public async Task<List<AlarmObject>> GetAlarmObjectsAsync()
         {
-            return await _context.AlarmObjects.ToListAsync();
+            return await _context.AlarmObjects
+                .Include(s=>s.ObjectOwner)
+                .ToListAsync();
         }
 
         public async Task InsertAlarmObjectAsync(AlarmObject insert)

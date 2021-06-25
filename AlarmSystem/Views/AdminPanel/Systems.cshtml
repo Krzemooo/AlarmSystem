@@ -1,0 +1,60 @@
+﻿@using AlarmSystem.Core.Models
+@model List<AlarmSystem>
+
+@{
+    Layout = "_Layout";
+}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="col-9">
+                            <h3 class="card-title ">Systemy alarmowe</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="users" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID systemu</th>
+                                    <th>Nazwa systemu</th>
+                                    <th>Nazwa obiektu do którego należy system</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Count > 0)
+                                {
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.ID
+                                            </td>
+                                            <td>
+                                                @item.SystemName
+                                            </td>
+                                            <td>
+                                                @item.AlarmObject.ObjectName
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    $(document).ready(function () {
+        $('#users').DataTable();
+    });
+</script>

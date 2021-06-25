@@ -18,7 +18,9 @@ namespace AlarmSystem.Core
 
         public async Task<List<InputOutput>> GetInputOutputsAsync()
         {
-            return await _context.InputOutputs.ToListAsync();
+            return await _context.InputOutputs
+                .Include(s=>s.AlarmSystem)
+                .ToListAsync();
         }
 
         public async Task InsertInputOutputAsync(InputOutput insert)

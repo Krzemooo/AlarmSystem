@@ -18,7 +18,9 @@ namespace AlarmSystem.Core
 
         public async Task<List<AlarmScenerio>> GetAlarmSceneriosAsync()
         {
-            return await _context.AlarmScenerios.ToListAsync();
+            return await _context.AlarmScenerios
+                .Include(s=>s.AlarmSystem)
+                .ToListAsync();
         }
 
         public async Task InsertAlarmScenerioAsync(AlarmScenerio insert)

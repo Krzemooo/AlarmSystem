@@ -18,7 +18,9 @@ namespace AlarmSystem.Core
 
         public async Task<List<AlarmZone>> GetAlarmZonesAsync()
         {
-            return await _context.AlarmZones.ToListAsync();
+            return await _context.AlarmZones
+                .Include(s=>s.AlarmSystem)
+                .ToListAsync();
         }
 
         public async Task InsertAlarmZoneAsync(AlarmZone insert)

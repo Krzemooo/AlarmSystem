@@ -18,7 +18,9 @@ namespace AlarmSystem.Core
 
         public async Task<List<Models.AlarmSystem>> GetAlarmSystemsAsync()
         {
-            return await _context.AlarmSystems.ToListAsync();
+            return await _context.AlarmSystems
+                .Include(s=>s.AlarmObject)
+                .ToListAsync();
         }
 
         public async Task InsertAlarmSystemAsync(Models.AlarmSystem insert)
