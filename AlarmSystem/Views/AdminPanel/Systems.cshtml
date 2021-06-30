@@ -1,5 +1,5 @@
 ﻿@using AlarmSystem.Core.Models
-@model List<AlarmSystem>
+@model AlarmSystemViewModel
 
 @{
     Layout = "_Layout";
@@ -26,9 +26,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (Model != null && Model.Count > 0)
+                                @if (Model.ItemList != null && Model.ItemList.Count > 0)
                                 {
-                                    @foreach (var item in Model)
+                                    @foreach (var item in Model.ItemList)
                                     {
                                         <tr>
                                             <td>
@@ -46,12 +46,16 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Dodaj system</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
+<partial name="_SystemFormModal" , model="@new SystemFormModel() { AlarmObjects=Model.ObjectList}" />
 
 <script>
     $(document).ready(function () {

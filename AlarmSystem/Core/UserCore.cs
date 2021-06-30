@@ -21,6 +21,16 @@ namespace AlarmSystem.Core
             return await _context.Users.ToListAsync();
         }
 
+        public async Task<User> GetUserAsync(int ID)
+        {
+            return await _context.Users.FirstAsync(s => s.ID == ID);
+        }
+
+        public async Task<List<User>> GetOnwersAsync()
+        {
+            return await _context.Users.Where(s => s.Role == "owner").ToListAsync();
+        }
+
         public async Task InsertUserAsync(User insert)
         {
             _context.Users.Add(insert);

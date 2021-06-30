@@ -42,11 +42,16 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Dodaj użytkownika</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<partial name="_UserFomModal",  model="@new UserFormModel()"/>
 
 
 <script>

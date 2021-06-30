@@ -1,4 +1,5 @@
 ﻿using AlarmSystem.Core;
+using AlarmSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -32,15 +33,32 @@ namespace AlarmSystem.Controllers
         public async Task<IActionResult> Systems()
         {
             var _alarmSystemCore = new Core.AlarmSystemCore(_context);
+            var _alarmObjectCore = new Core.AlarmObjectCore(_context);
             var result = await _alarmSystemCore.GetAlarmSystemsAsync();
-            return View(result);
+            var objects = await _alarmObjectCore.GetAlarmObjectsAsync();
+
+            AlarmSystemViewModel model = new AlarmSystemViewModel()
+            {
+                ItemList = result,
+                ObjectList = objects
+            };
+            return View(model);
         }
 
         public async Task<IActionResult> Objects()
         {
+            var _userCore = new Core.UserCore(_context);
             var _alarmObjectCore = new Core.AlarmObjectCore(_context);
             var result = await _alarmObjectCore.GetAlarmObjectsAsync();
-            return View(result);
+            var userList = await _userCore.GetOnwersAsync();
+
+            AlarmObjectViewModel model = new AlarmObjectViewModel()
+            {
+                ItemList = result,
+                UserList = userList
+            };
+
+            return View(model);
         }
 
         public async Task<IActionResult> Zones()
@@ -62,6 +80,59 @@ namespace AlarmSystem.Controllers
             var _alarmScenerioCore = new Core.AlarmScenerioCore(_context);
             var result = await _alarmScenerioCore.GetAlarmSceneriosAsync();
             return View(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UserForm(UserFormModel model)
+        {
+            if (!model.Id.HasValue)
+            {
+                var _userCore = new Core.UserCore(_context);
+                await _userCore.InsertUserAsync(new Core.Models.User()
+                {
+                    Email = model.Email,
+                    Role = model.Role,
+                    Password = Helper.Crypto.Encrypt(model.Password)
+                });
+            }
+
+            return Redirect("Users");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SystemForm(SystemFormModel model)
+        {
+            if (!model.ID.HasValue)
+            {
+                var _alarmSystemCore = new Core.AlarmSystemCore(_context);
+                var _alarmObjectCore = new Core.AlarmObjectCore(_context);
+                var _object = await _alarmObjectCore.GetAlarmObjectAsync(model.ObjectID);
+                await _alarmSystemCore.InsertAlarmSystemAsync(new Core.Models.AlarmSystem()
+                {
+                    AlarmObject = _object,
+                    SystemName = model.Name
+                });
+            }
+
+            return Redirect("Systems");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ObjectForm(ObjectFormModel model)
+        {
+            if (!model.ID.HasValue)
+            {
+                var _alarmObjectCore = new Core.AlarmObjectCore(_context);
+                var _userCore = new Core.UserCore(_context);
+                var _owner = await _userCore.GetUserAsync(model.OwnerID);
+                await _alarmObjectCore.InsertAlarmObjectAsync(new Core.Models.AlarmObject()
+                {
+                    ObjectOwner = _owner,
+                    ObjectName = model.Name
+                });
+            }
+
+            return Redirect("Objects");
         }
     }
 }
